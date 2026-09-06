@@ -369,6 +369,7 @@ _EOF_
 						'63' ': NanoPi M1'
 						'66' ': NanoPi M1 Plus'
 						'48' ': NanoPi R1'
+						'110' ': Orange Pi Zero'
 						'25' ': Generic Allwinner H3'
 					)
 
@@ -673,7 +674,7 @@ _EOF_
 			G_EXEC ln -sf /etc/kernel/post{inst,rm}.d/dietpi-initramfs_cleanup
 
 		# SBCs using Armbian build system for kernel/bootloader packages and boot.scr
-		elif [[ $G_HW_MODEL =~ ^(12|14|15|16|17|18|19|40|42|43|44|45|46|47|48|52|54|55|56|57|58|59|60|63|64|65|66|67|68|72|73|74|76|77|78|79|80|82|83|85|86|87|88|89|90|91|92|93|94|95|96|99|100|101|102|103|104|105|106|107|108|109)$ ]]
+		elif [[ $G_HW_MODEL =~ ^(12|14|15|16|17|18|19|40|42|43|44|45|46|47|48|52|54|55|56|57|58|59|60|63|64|65|66|67|68|72|73|74|76|77|78|79|80|82|83|85|86|87|88|89|90|91|92|93|94|95|96|99|100|101|102|103|104|105|106|107|108|109|110)$ ]]
 		then
 			# Amlogic 64-bit
 			armbian_packages=1
@@ -861,8 +862,8 @@ setenv bootlabel "DietPi"' /boot/boot.cmd
 				# Console args
 				G_EXEC sed --follow-symlinks -i 's/ttyAML0/ttyS0/' /boot/dietpiEnv.txt
 
-			# Allwinner H3 (32-bit)
-			elif [[ $G_HW_MODEL =~ ^(48|59|60|63|64|66)$ ]]
+			# Allwinner H2+/H3 (32-bit)
+			elif [[ $G_HW_MODEL =~ ^(48|59|60|63|64|66|110)$ ]]
 			then
 				G_EXEC sed --follow-symlinks -i 's/arm64/arm/' /boot/boot.cmd
 				G_EXEC sed --follow-symlinks -Ei '/^setenv (kernel_addr_r|fdt_addr_r|overlay_path)/d' /boot/boot.cmd
@@ -871,6 +872,7 @@ setenv bootlabel "DietPi"' /boot/boot.cmd
 				G_EXEC sed --follow-symlinks -i -e 's|\${prefix}Image|${prefix}zImage|' -e 's/booti/bootz/' -e 's|\${overlay_path}/||' /boot/boot.cmd
 				G_EXEC sed --follow-symlinks -i '/^overlay_path/d' /boot/dietpiEnv.txt
 				G_CONFIG_INJECT 'overlay_prefix=' 'overlay_prefix=sun8i-h3' /boot/dietpiEnv.txt
+				(( $G_HW_MODEL == 110 )) && G_CONFIG_INJECT 'fdtfile=' 'fdtfile=allwinner/sun8i-h2-plus-orangepi-zero.dtb' /boot/dietpiEnv.txt
 				# Overlays
 				case $G_HW_MODEL in
 					48) G_CONFIG_INJECT 'overlays=' 'overlays=usbhost1 usbhost2 uart1' /boot/dietpiEnv.txt;;
@@ -881,7 +883,7 @@ setenv bootlabel "DietPi"' /boot/boot.cmd
 				# Console args
 				case $G_HW_MODEL in
 					48) G_CONFIG_INJECT 'consoleargs=' 'consoleargs=console=ttyS1,115200' /boot/dietpiEnv.txt;; # headless
-					59|60|64) G_CONFIG_INJECT 'consoleargs=' 'consoleargs=console=ttyS0,115200' /boot/dietpiEnv.txt;; # headless
+					59|60|64|110) G_CONFIG_INJECT 'consoleargs=' 'consoleargs=console=ttyS0,115200' /boot/dietpiEnv.txt;; # headless
 					*) G_EXEC sed --follow-symlinks -i 's/ttyAML0/ttyS0/' /boot/dietpiEnv.txt;;
 				esac
 			fi
@@ -1246,6 +1248,7 @@ _EOF_
 				107) model='orangepi4pro' kernel='sun60iw2' branch='vendor';;
 				108) model='orangepizero3w' kernel='sun60iw2' branch='vendor';;
 				109) model='lubancat-4' kernel='rockchip64';;
+				110) model='orangepizero' kernel='sunxi';;
 				*) G_DIETPI-NOTIFY 1 "Unknown hardware ID \"$G_HW_MODEL\". Aborting ..."; exit 1;;
 			esac
 

@@ -145,6 +145,7 @@ jobs:
         '"uboot orangepi5pro edge",'\
         '"uboot orangepi5pro vendor",'\
         '"uboot orangepicm5 vendor",'\
+        '"uboot orangepizero current",'\
         '"uboot orangepizero2w current",'\
         '"uboot orangepizero3 current",'\
         '"uboot orangepizero3w vendor",'\
