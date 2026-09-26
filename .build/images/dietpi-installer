@@ -370,6 +370,7 @@ _EOF_
 						'66' ': NanoPi M1 Plus'
 						'48' ': NanoPi R1'
 						'25' ': Generic Allwinner H3'
+						'32' ': Orange Pi Zero/Zero LTS'
 					)
 
 				elif [[ $userland_arch == 'arm64' ]]
