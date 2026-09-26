@@ -38,6 +38,7 @@ shopt -s extglob # +(expr) syntax
 		[27]='Generic Allwinner H6'
 		[28]='Generic Amlogic S905'
 		[29]='Generic Amlogic S922X'
+		[32]='Orange Pi Zero/Zero LTS'
 		[40]='PINE A64'
 		[42]='ROCKPro64'
 		[43]='ROCK64'
