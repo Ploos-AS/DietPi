@@ -243,6 +243,7 @@
 				43) G_HW_MODEL_NAME='ROCK64' G_HW_CPUID=6;;
 				42) G_HW_MODEL_NAME='ROCKPro64' G_HW_CPUID=3;;
 				40) G_HW_MODEL_NAME='PINE A64' G_HW_CPUID=8;;
+				32) G_HW_MODEL_NAME='Orange Pi Zero/Zero LTS' G_HW_CPUID=1;;
 				29) G_HW_MODEL_NAME='Generic Amlogic S922X' G_HW_CPUID=4;;
 				28) G_HW_MODEL_NAME='Generic Amlogic S905' G_HW_CPUID=7;;
 				27) G_HW_MODEL_NAME='Generic Allwinner H6' G_HW_CPUID=5;;
